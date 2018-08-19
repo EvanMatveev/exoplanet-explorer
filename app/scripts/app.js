@@ -11,7 +11,7 @@ Instructions:
 /* jshint unused: false */
 
 (function(document) {
-  'use strict';
+  "use strict";
 
   var home = null;
 
@@ -20,7 +20,7 @@ Instructions:
    * @param {String} query - The search query.
    */
   function addSearchHeader(query) {
-    home.innerHTML = '<h2 class="page-title">query: ' + query + '</h2>';
+    home.innerHTML = '<h2 class="page-title">query: ' + query + "</h2>";
   }
 
   /**
@@ -28,7 +28,7 @@ Instructions:
    * @param  {Object} data - The raw data describing the planet.
    */
   function createPlanetThumb(data) {
-    var pT = document.createElement('planet-thumb');
+    var pT = document.createElement("planet-thumb");
     for (var d in data) {
       pT[d] = data[d];
     }
@@ -42,7 +42,7 @@ Instructions:
    */
   function get(url) {
     return fetch(url, {
-      method: 'get'
+      method: "get"
     });
   }
 
@@ -57,13 +57,16 @@ Instructions:
     });
   }
 
-  window.addEventListener('WebComponentsReady', function() {
+  window.addEventListener("WebComponentsReady", function() {
     home = document.querySelector('section[data-route="home"]');
     /*
     Uncomment the next line and start here when you're ready to add the first thumbnail!
 
     Your code goes here!
      */
-    // getJSON('../data/earth-like-results.json')
+    getJSON("../data/earth-like-results.json")
+      .then(response => addSearchHeader(response.query))
+      .then(data => createPlanetThumb(data))
+      .catch(err => console.error(err));
   });
 })(document);
